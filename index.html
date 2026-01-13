@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="utf-8" />
-  <title>BitcoinII Paper Wallet — Generate Otomatis</title>
+  <title>Bitcoin Blu (BBLU) Paper Wallet</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
     body {
@@ -107,7 +107,7 @@
 </head>
 <body>
 
-  <h1>BitcoinII Paper Wallet : Donations bc2: 1asbxZfb3dByu5RxMakshVMt1GWNGToRp</h1>
+  <h1>Bitcoin Blu (BBLU) Wallet : Donations BBLU: bb1qtq2efs4wsj8d6y5h0h0zlp8ccw08zzs8tmhdex</h1>
 
   <div class="card">
     <!-- Pilihan Tipe Alamat -->
@@ -118,7 +118,7 @@
         <option value="p2pkh_comp">2. P2PKH (1...) Compressed</option>
         <option value="p2pkh_uncomp">3. P2PKH Uncompressed</option>
         <option value="p2sh_p2wpkh">4. P2SH-P2WPKH (3...)</option>
-        <option value="bech32">5. Bech32 (bc1...)</option>
+        <option value="bech32">5. Bech32 (bb1...)</option>
       </select>
       <button id="btnGenerateKey">Generate Otomatis</button>
     </div>
@@ -220,7 +220,7 @@
     };
 
     bg.onerror = () => {
-      renderMessage('Gagal memuat ' + TEMPLATE + ' — pastikan file ada di folder yang sama.', true);
+      renderMessage('Gagal memuat ' + TEMPLATE + ' â€” pastikan file ada di folder yang sama.', true);
       renderBlank();
     };
 
@@ -230,7 +230,7 @@
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = '#666';
       ctx.font = '20px Arial';
-      ctx.fillText('Preview kosong — klik Generate jika template dan input sudah benar.', 20, 40);
+      ctx.fillText('Preview kosong â€” klik Generate jika template dan input sudah benar.', 20, 40);
     }
 
     function renderMessage(text, isWarn = false) {
@@ -313,7 +313,7 @@
       const pubWA = CryptoJS.enc.Hex.parse(pubHex);
       const sha = CryptoJS.SHA256(pubWA);
       const ripe = CryptoJS.RIPEMD160(sha);
-      const verPayloadHex = "00" + wordToHex(ripe);
+      const verPayloadHex = "19" + wordToHex(ripe);
       const verWA = CryptoJS.enc.Hex.parse(verPayloadHex);
       const checksum = CryptoJS.SHA256(CryptoJS.SHA256(verWA));
       const chkHex = wordToHex(checksum).slice(0, 8);
@@ -327,7 +327,7 @@
       const scriptHex = "0014" + wordToHex(hash160);
       const scriptWA = CryptoJS.enc.Hex.parse(scriptHex);
       const scriptHash = CryptoJS.RIPEMD160(CryptoJS.SHA256(scriptWA));
-      const verPayloadHex = "05" + wordToHex(scriptHash);
+      const verPayloadHex = "56" + wordToHex(scriptHash);
       const verWA = CryptoJS.enc.Hex.parse(verPayloadHex);
       const checksum = CryptoJS.SHA256(CryptoJS.SHA256(verWA));
       const chkHex = wordToHex(checksum).slice(0, 8);
@@ -341,7 +341,7 @@
       const ripe = CryptoJS.RIPEMD160(sha);
       const hash = hexToBytes(wordToHex(ripe));
       const words = [0].concat(toWords(hash));
-      return bech32Encode("bc", words);
+      return bech32Encode("bb", words);
     }
 
     // Generate Otomatis
@@ -397,7 +397,7 @@
 
     // Encode WIF (Compressed)
     function encodeWIF(privHex) {
-      const extended = '80' + privHex + '01';
+      const extended = '0xbc' + privHex + '01';
       const firstSha = CryptoJS.SHA256(CryptoJS.enc.Hex.parse(extended));
       const secondSha = CryptoJS.SHA256(firstSha);
       const checksum = wordToHex(secondSha).slice(0, 8);
@@ -545,4 +545,5 @@
     renderBlank();
   </script>
 </body>
+
 </html>
